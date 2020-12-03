@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+
+    <div class="clock">
+      <div class="clock-face">
+        <span class="num twelve">12</span>
+        <span class="num three">3</span>
+        <span class="num six">6</span>
+        <span class="num nine">9</span>
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+
+
+  <style>
+    html{
+      background: #018DED ;
+     background-size: cover;
+     font-family:'helvetica neue';
+     text-align: center;
+     font-size: 10;
+    }
+
+    .body{
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      min-height: 100vm;
+      align-items: center;
+    }
+
+    .clock{
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow: 2rem 2rem 4px rgba(0,0,0,0.1);
+    }
+
+    .clock-face{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      /* transform:translateY(-3px) ; */
+    }
+
+    .num{
+      position: absolute;
+      display: block;
+      font-size: 2rem;
+      color: white;
+    }
+
+    .twelve{
+      top: 0;
+      left: 47%;
+    }
+
+    .three{
+      bottom: 50%;
+      right: 0;
+    }
+
+    .six{
+      bottom: 0;
+      right: 50%;
+    }
+
+    .nine{
+      bottom: 50%;
+      left: 0;
+    }
+    .hand{
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform-origin: 100%;
+      transform:rotate(0deg);
+      transition: all 0.05s;
+    }
+
+    .second-hand{
+      width: 50%;
+      height: 2px;
+      background: red;
+    }
+
+    .min-hand{
+      width: 40%;
+      height: 4px;
+      background: white;
+    }
+
+    .hour-hand{
+      width: 30%;
+      height: 6px;
+      background: black;
+    } 
+    /* 
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px); // account for the height of the clock hands 
+    }
+
+    .hand {
+      /* background: black; 
+      position: absolute;
+      top: 50%;
+      right: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg); 
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0.1, 2.7, 0.58, 1);
+    }
+
+    .second-hand{
+      width: 50%;
+      height: 2px;
+      background: red;
+    }
+
+    .min-hand{
+      width: 40%;
+      height: 4px;
+      background: white;
+    }
+
+    .hour-hand{
+      width: 30%;
+      height: 6px;
+      background: black;
+    } */
+
+  </style>
+
+  <script>
+    const secondHand=document.querySelector(`.second-hand`);
+    const minsHand=document.querySelector(`.min-hand`);
+    const hourHand=document.querySelector(`.hour-hand`);
+
+    function setDate(){
+      const now = new Date();
+
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+      const mins = now.getMinutes();
+      const minsDegrees = ((mins / 60) * 360) + ((seconds/60)*6) + 90;//因为分针走过一分钟就是6度
+      minsHand.style.transform = `rotate(${minsDegrees}deg)`;
+
+      const hour = now.getHours();
+      const hourDegrees = ((hour / 12) * 360) + ((mins/60)*30) + 90;//因为时针走过一小时是30度
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+    }
+
+    setInterval(setDate,1000);
+    setDate();
+  </script>
+</body>
+</html>
