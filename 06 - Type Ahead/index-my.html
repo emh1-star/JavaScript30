@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="myStyle.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+//1.定义一个空数组来接收数据，通过fetch获取json数据
+const cities=[];
+fetch(endpoint)
+    .then(blob=>blob.json())
+    .then(data=>cities.push(...data));
+console.log(cities);
+
+// 2.用关键字与数组中的每个对象的city或state比对，将能匹配上的对象作为一个新数组返回
+function findMatches(wordToMatch,cities){
+  return cities.filter(place=>{
+    const regex=new RegExp(wordToMatch,'gi');
+    return place.city.match(regex)||place.state.match(regex);
+  });
+}
+
+//对人口数的处理
+function numberWithCommas(x){
+  //return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  return x.toLocaleString();//把数字每3位隔开
+}
+
+// 3.根据input的输入，调用findMatches函数，获取所有具有关键字的对象数组，为其中的每个元素生成一段html代码(2个span)
+function displayMatches(){
+  const macthArray=findMatches(this.value,cities);
+  const html=macthArray.map(place=>{
+    const regex=new RegExp(this.value,'gi');
+    // 下面的2个变量是将城市名，州名中的关键字换成了高亮span的字符串，可以打开检查的elements看到
+    const cityName=place.city.replace(regex,`<span class="hl">${this.value}</span>`);
+    const stateName=place.state.replace(regex,`<span class="hl">${this.value}</span>`);
+    return `
+    <li>
+    <span class="name">${cityName},${stateName}</span>
+    <span class="population">${numberWithCommas(place.population.toString())}</span>
+    </li>
+    `;
+  }).join('');
+  suggestions.innerHTML=html;
+}
+
+const searchInput=document.querySelector('.search');
+const suggestions=document.querySelector('.suggestions');
+
+searchInput.addEventListener('change',displayMatches);
+searchInput.addEventListener('keyup',displayMatches);
+
+</script>
+</body>
+</html>
