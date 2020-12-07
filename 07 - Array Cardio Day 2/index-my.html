@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Array Cardio 💪💪</title>
+</head>
+<body>
+  <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+  <script>
+    // ## Array Cardio Day 2
+
+    const people = [
+      { name: 'Wes', year: 1988 },
+      { name: 'Kait', year: 1986 },
+      { name: 'Irv', year: 1970 },
+      { name: 'Lux', year: 2015 }
+    ];
+
+    const comments = [
+      { text: 'Love this!', id: 523423 },
+      { text: 'Super good', id: 823423 },
+      { text: 'You are the best', id: 2039842 },
+      { text: 'Ramen is my fav food ever', id: 123523 },
+      { text: 'Nice Nice Nice!', id: 542328 }
+    ];
+    //返回一个bool值，数组中是否至少有一个元素满足检测函数的条件
+    console.log(
+      people.some(item=>(new Date().getFullYear()-item.year>=19))
+      );
+
+    //返回一个bool值，数组中是否所有的元素都满足检测函数的条件
+    console.log(
+      people.every(item=>(new Date().getFullYear()-item.year>=19))
+    );
+
+    //返回1个元素，它是数组中满足检测函数条件的第一个元素
+    console.log(
+      comments.find(item=>item.id==823423)
+    );
+   
+    //返回1个数组下标，它是数组中满足检测函数条件的第一个元素的下标，就是find获得的元素的下标啦
+    let index=comments.findIndex(item=>item.id==823423);
+    //...是数组的解构
+    const newComments=[...comments.slice(0,index),...comments.slice(index+1)];
+    console.log(newComments);
+  </script>
+</body>
+</html>
