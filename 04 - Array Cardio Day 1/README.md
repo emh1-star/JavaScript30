@@ -1,7 +1,7 @@
 ### 关于数组的一些方法
 ***注意：每个函数的第一个function参数都要有返回值***
 ##### 1.Array.prototype.filter()
-filter()返回一个新数组，其中的元素由function决定。cunction是用来测试数组的每个元素的函数。返回 true 表示该元素通过测试，保留该元素，false 则不保留。
+filter()返回一个新数组，其中的元素由function决定。function是用来测试数组的每个元素的函数。返回 true 表示该元素通过测试，保留该元素，false 则不保留。
 ```
 arr.filter(function(currentElement,index,arr), thisValue)
 ```
